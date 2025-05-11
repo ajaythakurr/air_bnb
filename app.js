@@ -19,7 +19,8 @@ const userRouter = require("./routes/user");
 app.use(methodOverride("_method"));
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"));
-app.use(express.urlencoded(extended = true));
+app.use(express.urlencoded({ extended: true }));
+
 app.engine("ejs",ejsMate);
 app.use(express.static(path.join(__dirname,"/public")));
 // app.set("utels",path.join(__dirname,"/utels"));
@@ -37,7 +38,7 @@ async  function main(){
 const sessionOptions = {
     secret: "mysupersecretcode",
     resave: false,
-    saveUninitialised: true,
+    saveUninitialized: true,
     cookie:{
         httponly: true,
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7, // 7 days
@@ -56,7 +57,7 @@ app.use(session(sessionOptions));
 app.use(flash());
 
 app.use(passport.initialize());
-passport.session();
+app.use(passport.session());
 
 // use static authenticate method of model in LocalStrategy
 passport.use(new LocalStrategy(User.authenticate()));
@@ -68,6 +69,7 @@ passport.deserializeUser(User.deserializeUser());
 app.use((req,res,next)=>{
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
+    res.locals.currentUser = req.user;
     next();
 })
 
