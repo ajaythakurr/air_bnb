@@ -8,9 +8,13 @@ const ExpressError = require("./utels/ExpressErrors");
 const { error } = require("console");
 const session = require("express-session");
 const flash = require("connect-flash");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./models/user");
 
-const listings = require("./routes/listings");
-const reviews = require ("./routes/reviews");
+const listingRouter = require("./routes/listings");
+const reviewRouter = require ("./routes/reviews");
+const userRouter = require("./routes/user");
 
 app.use(methodOverride("_method"));
 app.set("view engine","ejs");
@@ -51,17 +55,42 @@ app.get("/",(req,res)=>{
 app.use(session(sessionOptions));
 app.use(flash());
 
+app.use(passport.initialize());
+passport.session();
+
+// use static authenticate method of model in LocalStrategy
+passport.use(new LocalStrategy(User.authenticate()));
+// use static serialize and deserialize of model for passport session support
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+
 app.use((req,res,next)=>{
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
     next();
 })
 
+app.get("/demouser",async (req,res)=>{
+    const user = new User({
+        email:"student@getMaxListeners.com",
+        username: "deltaStudent"
+    });
+
+    let newUser = await User.register(user,"hello-world");
+    res.send(newUser);
+
+})
+
+//user routes
+app.use("/user",userRouter);
+
+
 //listings routes
-app.use("/listings",listings);
+app.use("/listings",listingRouter);
 
 //Reviews
-app.use("/listings/:id/reviews",reviews);
+app.use("/listings/:id/reviews",reviewRouter);
 
 // Wildcard route for handling undefined routes
 // app.all("*", (req, res, next) => {

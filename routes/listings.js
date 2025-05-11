@@ -55,7 +55,7 @@ router.get("/:id/edit",wrapAsync(async(req,res)=>{
     if(!listing){
         req.flash("error","listing not found!");
         res.redirect("/listings");
-    }
+    } 
     else res.render("listings/edit",{listing});
 }));
 //update route
