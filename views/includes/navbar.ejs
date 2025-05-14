@@ -1,32 +1,110 @@
-<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top" >
+<style>
+  .searchbox-form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 1rem;
+    width: 100%;
+
+  }
+  .search-btn{
+    background-color: #fe424d;
+    color: white;
+    opacity: 1;
+    border-radius: 1rem;
+    padding: 0 1rem 0 1rem;
+  }
+  .search-btn:hover{
+    background-color: #fe424d;
+    color: white;
+    opacity: 0.9;
+  }
+  .search-btn i{
+    display: inline;
+    margin-right: 0.5rem;
+  }
+
+  .search-input{
+    border-radius: 1rem;
+    padding: 0.5rem 3rem 0.5rem 3rem;
+    font-size: 1rem;
+  }
+  .complete-navbar{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    flex-wrap: wrap; /* responsive on smaller screens */
+    gap: 1rem;
+  }
+  .complete-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    flex-wrap: wrap; /* responsive on smaller screens */
+    gap: 1rem;
+}
+
+.navbar-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.searchbox-form {
+    width: 100%;
+    max-width: 500px;
+}
+
+.nav-left,
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+</style>
+
+
+
+<nav class="navbar navbar-expand-sm bg-body-light border-bottom sticky-top" >
 
   <div class="container-fluid">
 
     <a class="navbar-brand" href="/listings" ><i class="fa-solid fa-compass"></i></a>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-link active" aria-current="page" href="/listings">Home</a>
-        <!-- <a class="nav-link" href="/listings">All Listings</a> -->
-        <a class="nav-link" href="/listings/newlist">Add new Listing</a>
+    <div class="navbar-nav navbar-center">
+      <form class="d-flex searchbox-form" role="search" action="/listings/search" method="GET">
+        <li><input 
+          class="form-control me-2 search-input" 
+          type="search" 
+          placeholder="Search Destinations"
+          name="search"
+        /></li>
+        <li><button class="btn search-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button></li>
+      </form>
+    </div>
+
+    <div class="navbar-nav ms-auto navbar-left">
+  
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li><a class="nav-link" href="/listings/newlist">Airbnb your Home</a></li>
+          
+          <% if(!currentUser){ %>
+          <li><a class="nav-link" href="/user/signup"> Sign Up</a></li>
+          <li><a class="nav-link" href="/user/login">Log In</a></li>
+          <% } else { %>
+                <li><a class="nav-link" href="/user/logout">Log Out</a></li>
+          <%} %>
+
+        </ul>
       </div>
-    </div>
-
-    <div class="navbar-nav ms-auto">
-
-      <% if(!currentUser){ %>
-        <a class="nav-link" href="/user/signup">Sign Up</a>
-        <a class="nav-link" href="/user/login">Log In</a>
-      <% } else { %>
-        
-        <a class="nav-link" href="/user/logout">Log Out</a>
-      <%} %>
-      
-    </div>
 
   </div>
 </nav>

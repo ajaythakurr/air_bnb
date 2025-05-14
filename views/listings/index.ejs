@@ -1,11 +1,132 @@
 <% layout("/layouts/boilerplate.ejs") %>   
 
-<h3>ALL Listings</h3>
+<!--  <h3>ALL Listings</h3> -->
 <!-- <form method = "GET" action="/listings/newlist">
     <button>create  new listing</button>
 </form> -->
 
-<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <!-- <a class="navbar-brand" href="#">Filters</a> -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            Filters
+          </button>
+         
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <div id="filters">
+                    <li>
+                        <div class="filter">
+                          <a href="/listings/categories/Trending">
+                            <div><i class="fa-solid fa-fire"></i></div>
+                            <p>Trending</p>
+                          </a>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="filter">
+                          <a href="/listings/categories/Rooms">
+                            <div><i class="fa-solid fa-bed"></i></div>
+                            <p>Rooms</p>
+                          </a>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="filter">
+                          <a href="/listings/categories/Iconic%20Cities">
+                            <div><i class="fa-solid fa-mountain-city"></i></div>
+                            <p>Iconic Cities</p>
+                          </a>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="filter">
+                          <a href="/listings/categories/Mountains">
+                            <div><i class="fa-solid fa-mountain"></i></div>
+                            <p>Mountains</p>
+                          </a>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="filter">
+                          <a href="/listings/categories/Castles">
+                            <div><i class="fa-solid fa-place-of-worship"></i></div>
+                            <p>Castles</p>
+                          </a>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="filter">
+                          <a href="/listings/categories/Amazing%20Pools">
+                            <div><i class="fa-solid fa-person-swimming"></i></div>
+                            <p>Amazing Pools</p>
+                          </a>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="filter">
+                          <a href="/listings/categories/Camping">
+                            <div><i class="fa-solid fa-campground"></i></div>
+                            <p>Camping</p>
+                          </a>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="filter">
+                          <a href="/listings/categories/Farms">
+                            <div><i class="fa-solid fa-tractor"></i></div>
+                            <p>Farms</p>
+                          </a>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="filter">
+                          <a href="/listings/categories/Arctic">
+                            <div><i class="fa-solid fa-snowflake"></i></div>
+                            <p>Arctic</p>
+                          </a>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="filter">
+                          <a href="/listings/categories/Beach">
+                            <div><i class="fa-solid fa-umbrella-beach"></i></div>
+                            <p>Beach</p>
+                          </a>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="filter">
+                          <a href="/listings/categories/Volcano">
+                            <div><i class="fa-solid fa-volcano"></i></div>
+                            <p>Volcano</p>
+                          </a>
+                        </div>
+                      </li>
+                      
+                    
+                        <div class="tax-toggle">
+                            <div class="form-check form-switch form-check form-check-reverse">
+                                <input class="form-check-input" 
+                                type="checkbox" 
+                                role="switch" 
+                                id="switchCheckDefault"
+                                >
+                                <label class="form-check-label" for="switchCheckDefault" style="font-size: 0.7rem;">Display Total After Taxes</label>
+                            </div>
+                        </div>
+                    </li>
+                </div>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+
+<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
     <%for(let listing of allListings){%>
         <div class="card col listing-card">
 
@@ -25,6 +146,7 @@
                     <br>
                     
                     &#8377 <%=listing.price.toLocaleString("en-IN")%>/night
+                    <i class="tax-info" style="font-size: 0.7rem;">&nbsp;+18%gst</i>
                 </p>
                 
 
@@ -33,4 +155,6 @@
         </div>
     <%}%>
 </div>
+
+
 

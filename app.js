@@ -1,3 +1,6 @@
+if(process.env.NODE_ENV != "productio"){
+    require('dotenv').config();
+}
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -7,6 +10,7 @@ const ejsMate= require("ejs-mate");
 const ExpressError = require("./utels/ExpressErrors");
 const { error } = require("console");
 const session = require("express-session");
+const MongoStore =require("connect-mongo");
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -25,18 +29,31 @@ app.engine("ejs",ejsMate);
 app.use(express.static(path.join(__dirname,"/public")));
 // app.set("utels",path.join(__dirname,"/utels"));
 
+const dbUrl = process.env.ATLAS_URL;
 
 main()
 .then(()=> console.log("connected to mongodb"))
 .catch((err)=>console.log(err));
 
 async  function main(){
-    await mongoose.connect('mongodb://127.0.0.1:27017/Wanderlust')
+    await mongoose.connect(dbUrl);
 };
 
+const store = MongoStore.create({
+    mongoUrl:dbUrl,
+    crypto:{
+        secret: process.env.SECRET,
+    },
+    touchAfter: 24*60*60
+});
+
+store.on("error",()=>{
+    console.log("ERROR,in MONGO SESSION STORE",err);
+});
 //session options
 const sessionOptions = {
-    secret: "mysupersecretcode",
+    store,
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
     cookie:{
@@ -47,10 +64,10 @@ const sessionOptions = {
 };
 
 
-//root route
-app.get("/",(req,res)=>{
-    res.send("Hi, I am Root");
-})
+// //root route
+// app.get("/",(req,res)=>{
+//     res.redirect("/listings");
+// })
 
 
 app.use(session(sessionOptions));

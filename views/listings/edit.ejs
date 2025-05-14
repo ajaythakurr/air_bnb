@@ -2,16 +2,18 @@
 <div class="row">
     <div class="col-8 offset-2 mt-3" >
         <h2>Edit Your Lisitng</h2>
-        <div class="card mt-3" style="width: 18rem;">
-            <img src="<%=listing.image.url%>" class="card-img-top" alt="listing image">
-            
-          </div>
-        <form method="post" action="/listings/<%=listing._id%>?_method=PUT" class="needs-validation" novalidate >
+        
+        <form method="post" action="/listings/<%=listing._id%>?_method=PUT" class="needs-validation" novalidate enctype="multipart/form-data" >
+<!-- 
+            <div class="card mt-3" style="width: 18rem;">
+                <img src="<%=listing.image.url%>" class="card-img-top" alt="listing image">
+                
+              </div> -->
 
             <!-- <div class="mb-3">
                 <label> <p>Listing id: <%=listing._id%></p></label>
             </div> -->
-            
+            <br>
             
             <div class="mb-3">
                 <label for="title" class="form-label">Title</label>
@@ -19,12 +21,34 @@
                 <div class="invalid-feedback">Please Enter a Title</div>
             </div>
             
+            <br>
             <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
                 <textarea class="form-control"  name="description" required> <%=listing.description%> </textarea>
                 <div class="invalid-feedback">Please enter short description</div>
             </div>
+            <br>
+            <br>
+            
+            <div>
+                <label for="currentImage" class="form-label">Current Image</label>
+                <div class="card mt-3" style="width: 18rem;">
+                    <img src="<%=originalImage%>" class="card-img-top" alt="listing image">
+                </div>
+            </div>
+            <br>
+            <div class="mb-3">
+                <label for="image" class="form-label">Add new Image</label>
+                <input
+                name="image"
+                type="file"
+                class="form-control"
+                placeholder="Upload new Image"
+                >
+                
+            </div>
     
+            <br>
             <div class="row">
                 <div class="mb-3 col-md-4">
                     <label for="price" class="form-label">Price</label>
@@ -38,6 +62,7 @@
                 </div>
                 
             </div>
+            <br>
             <div class="mb-3">
                 <label for="location" class="form-label">Location</label>
                 <input class="form-control" name="location" value="<%=listing.location%>" required>

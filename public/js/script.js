@@ -16,3 +16,17 @@
       }, false)
     })
   })()
+  
+
+// This is the script for the tax info switch-------------------------
+let taxSwitch = document.getElementById("switchCheckDefault");
+taxSwitch.addEventListener("click",()=>{
+    let taxInfo= document.getElementsByClassName("tax-info");
+    for(info of taxInfo){
+        if(taxSwitch.checked){
+            info.style.display = "block";
+        }else{
+            info.style.display = "none";
+        }
+    }
+})
